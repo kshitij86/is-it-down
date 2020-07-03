@@ -1,0 +1,44 @@
+<html>
+    <head>
+        <title>Match lyrics from memory</title>
+    </head>
+
+    <body>
+        <div id="search">
+            <h1>Type lyrics to match...</h1>
+            <form action="{{ url_for('index') }}" method="post">
+                <input name="artist" placeholder="Artist's name"/>
+                <br>
+                <textarea
+                    placeholder="Type here" 
+                    name="lyrics"
+                    style="margin: 0px; width: 500px; height: 120px;"></textarea>
+                <br/>
+                <br/>
+                <input type="submit"/>
+            </form>
+            <br/>
+            <hr/>
+        </div>
+
+        <div id="result">
+            {% if not artist and not lyrics %}
+                <h1>Searched for nothing yet...</h1>
+            {% endif %}
+            {% if artist is none and lyrics is not none  %}
+                <h1> You searched for </h1>
+                <p> Artist: {{ artist  }} </p>
+                <p> Lyrics: </p>
+                <p> {{ lyrics }} </p>
+            {% endif %}
+        </div>
+
+        <!-- Prevent confirm form resubmission-->
+        <script>
+          if ( window.history.replaceState ) {
+                window.history.replaceState( null, null, window.location.href );
+            }
+        </script>
+    
+    </body>
+</html>
