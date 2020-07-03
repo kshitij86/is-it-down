@@ -9,6 +9,7 @@ def index():
     artist = None
 
     if request.method == 'POST':
+        artist = request.form['artist']
         lyrics = request.form['lyrics']
         return render_template('index.html', lyrics=lyrics, artist=artist)
 
