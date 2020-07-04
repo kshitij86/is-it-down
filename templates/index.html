@@ -1,21 +1,35 @@
 <html>
     <head>
-        <title>Match lyrics from memory</title>
+        <title>Is it down?</title>
+        <style>
+            .unselectable {
+                -webkit-touch-callout: none;
+                -webkit-user-select: none;
+                -khtml-user-select: none;
+                -moz-user-select: none;
+                -ms-user-select: none;
+                user-select: none;
+            }
+        </style>
     </head>
 
     <body>
-        <div id="search">
-            <h1>Type lyrics to match...</h1>
+        <div class="unselectable" id="search">
+            <h1>Is it down?</h1>
             <form action="{{ url_for('index') }}" method="post">
                 <input 
-                    name="artist" 
-                    placeholder="Artist's name"/>
+                style="width: 500px" 
+                    name="site" 
+                    placeholder="URL to check for"/>
                 <br>
-                <textarea
-                    placeholder="The rhymes..." 
-                    name="lyrics"
-                    style="margin: 0px; width: 500px; height: 120px;"></textarea>
-                <br/>
+                <!--
+                    <textarea
+                        placeholder="The rhymes..." 
+                        name="lyrics"
+                        style="margin: 0px; width: 500px; height: 120px;"></textarea>
+                    <br/>
+                
+                -->
                 <br/>
                 <input type="submit"/>
             </form>
@@ -23,20 +37,25 @@
             <hr/>
         </div>
 
-        <div id="result">
-            {% if not artist and not lyrics %}
-                <h1>Searched for nothing yet...</h1>
+        <div class="unselectable" id="result">
+            {% if not site %}
+                <h1>All good  ✔️</h1>
             {% endif %}
-            {% if artist is not none and lyrics is not none %}
-                <h1> You searched for </h1>
-                <p> 
-                    Artist: {{ artist  }} 
-                </p>
-                <p> Lyrics: </p>
-                <p> 
-                    {{ lyrics }} 
-                </p>
+            {% if site %}
+             <p> Domain you entered </p>
+                <h4> 
+                    {{ site  }}  
+                </h4>
             {% endif %}
+            {% if site and isUp is sameas false %}
+               <h1>Yeah, it's down. Or maybe it was never really up?</h1>
+               <code>{{ status_code }}</code>
+            {% endif %}
+            {% if site and isUp is sameas true %}
+               <h1>That domain is up and running</h1>
+               <code>{{ status_code }}</code>
+            {% endif %}
+            
         </div>
 
         <!-- Prevent confirm form resubmission-->

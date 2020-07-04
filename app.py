@@ -1,20 +1,20 @@
 from flask import *
+from check import *
 
 
 app = Flask(__name__)
 
 @app.route('/', methods=['GET','POST'])
 def index():
-    lyrics = None
-    artist = None
-
     if request.method == 'POST':
-        artist = request.form['artist']
-        lyrics = request.form['lyrics']
-        return render_template('index.html', lyrics=lyrics, artist=artist)
+        site = request.form['site']
+        res = check_site(site)
+        isUp = res[1]
+        status_code = res[0] 
+        return render_template('index.html', site=site, isUp=isUp, status_code=status_code)
 
     else:
-        return render_template('index.html', lyrics=lyrics, artist=artist)
+        return render_template('index.html')
 
 
 if __name__ == "__main__":
